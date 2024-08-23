@@ -3,16 +3,27 @@ package main
 import (
 	"bei-go-boilerplate/internal/config"
 	"fmt"
-	"log"
 )
 
 func main() {
 	viperConfig := config.NewViper()
+	log := config.NewLogger(viperConfig)
 	db := config.NewDatabase(viperConfig)
-	_ = config.NewHttpClient()
+	httpClient := config.NewHttpClient()
 	app := config.NewFiber(viperConfig)
+	// pubsubSubscriber := config.NewPubsubSubscriber(viperConfig)
+	_ = config.NewCloudTasks(viperConfig)
+	_ = config.NewCloudStorage(viperConfig)
+	pubsubPublisher := config.NewPubsubPublisher(viperConfig)
 
-	fmt.Println(db)
+	config.Bootstrap(&config.BootstrapConfig{
+		DB:        db,
+		App:       app,
+		Log:       log,
+		Config:    viperConfig,
+		Client:    httpClient,
+		Publisher: pubsubPublisher,
+	})
 
 	webPort := viperConfig.GetInt("web.port")
 	err := app.Listen(fmt.Sprintf(":%d", webPort))
