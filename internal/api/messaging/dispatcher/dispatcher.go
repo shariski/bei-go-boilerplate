@@ -1,4 +1,4 @@
-package messaging
+package dispatcher
 
 import (
 	"context"

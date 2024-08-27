@@ -30,7 +30,7 @@ func (c *UserController) Register(ctx *fiber.Ctx) error {
 	}
 
 	response := entity.User{
-		ID:       primitive.NewObjectID(),
+		UserID:   primitive.NewObjectID(),
 		Password: "password",
 		Name:     "Falah",
 	}

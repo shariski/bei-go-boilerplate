@@ -1,13 +1,14 @@
 package messaging
 
 import (
+	"bei-go-boilerplate/internal/api/messaging/dispatcher"
 	"context"
 	"fmt"
 
 	"cloud.google.com/go/pubsub"
 )
 
-func ConsumeSubscription(client *pubsub.Client, subID string, dispatcher *Dispatcher) error {
+func ConsumeSubscription(client *pubsub.Client, subID string, dispatcher *dispatcher.Dispatcher) error {
 	ctx := context.Background()
 
 	sub := client.Subscription(subID)

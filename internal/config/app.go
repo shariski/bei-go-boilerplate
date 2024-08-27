@@ -3,6 +3,8 @@ package config
 import (
 	controller "bei-go-boilerplate/internal/api/http"
 	"bei-go-boilerplate/internal/api/http/route"
+	eventMessaging "bei-go-boilerplate/internal/api/messaging"
+	"bei-go-boilerplate/internal/api/messaging/dispatcher"
 	"bei-go-boilerplate/internal/client/messaging"
 	"bei-go-boilerplate/internal/service"
 	"net/http"
@@ -32,6 +34,12 @@ func Bootstrap(config *BootstrapConfig) {
 
 	// controller
 	userController := controller.NewUserController(userService, config.Log)
+
+	// dispatcher
+	dispatcher := dispatcher.NewDispatcher()
+
+	// event handlers
+	eventMessaging.RegisterHandlers(dispatcher)
 
 	routeConfig := route.RouteConfig{
 		App:            config.App,

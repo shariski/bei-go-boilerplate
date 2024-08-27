@@ -11,10 +11,10 @@ func main() {
 	db := config.NewDatabase(viperConfig)
 	httpClient := config.NewHttpClient()
 	app := config.NewFiber(viperConfig)
-	// pubsubSubscriber := config.NewPubsubSubscriber(viperConfig)
 	_ = config.NewCloudTasks(viperConfig)
 	_ = config.NewCloudStorage(viperConfig)
 	pubsubPublisher := config.NewPubsubPublisher(viperConfig)
+	pubsubSubscriber := config.NewPubsubSubscriber(viperConfig)
 
 	config.Bootstrap(&config.BootstrapConfig{
 		DB:        db,
